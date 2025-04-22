@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "ratp-message",
-    "slug": "ratp-message",
+    "name": "bus-message-generator",
+    "slug": "bus-message-generator",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

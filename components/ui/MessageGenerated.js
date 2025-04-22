@@ -2,6 +2,10 @@ import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useState } from 'react';
 
+// const generateRandomNumber = (min, max) => {
+//     return Math.floor(Math.random() * (max - min + 1)) + min;
+// };
+
 const MessageGenerated = () => {
 
     const [transportType, setTransportType] = useState('');
@@ -11,9 +15,50 @@ const MessageGenerated = () => {
     const [generatedID, setGeneratedID] = useState('');
     const now = new Date(); // Variable a manipuler pour les dates
 
-    // const generateRandomNumber = (min, max) => {
-    //     return Math.floor(Math.random() * (max - min + 1)) + min;
-    // };
+    // Prendre un paramètre en entrée, sortir une variable en sortie
+    // Mixer ensuite les deux variables 
+    // Les attribuer aux fonctions ensuite, avec leur corps à la suite
+
+    const getMessage = () => {
+        var messageSended = "BUS57"; // Chaine a récupérer
+        return messageSended;
+    }
+
+    const getTransportType = () => {
+        var currentTransportType;
+        var messageSended = getMessage();
+
+        if (messageSended.includes("BUS")) {
+            var transportType = messageSended.substring(0, 3);
+            // var busNumber = messageSended.substring(3);
+            currentTransportType = transportType;
+
+        } else {
+            var transportType = messageSended.substring(0, 3);
+            // var busNumber = messageSended.substring(3);
+            currentTransportType = transportType;
+        }
+
+        return currentTransportType;
+    }
+
+    const getBus = () => {
+        var currentBus;
+        var messageSended = getMessage();
+
+        if (messageSended.includes("BUS")) {
+            // var transportType = messageSended.substring(0, 3);
+            var busNumber = messageSended.substring(3);
+            currentBus = busNumber;
+
+        } else {
+            // var transportType = messageSended.substring(0, 3);
+            var busNumber = messageSended.substring(3);
+            currentBus = busNumber;
+        }
+
+        return currentBus;
+    }
 
     const generateRandomNumbers = () => {
         let code = '';
@@ -40,7 +85,6 @@ const MessageGenerated = () => {
         const day = theDate.getDate().toString().padStart(2, '0');
         const month = (theDate.getMonth() + 1).toString().padStart(2, '0');
         const result = `${day}.${month}.${theDate.getFullYear()}`;
-        console.log(result);
         return result;
     }
 
@@ -48,8 +92,6 @@ const MessageGenerated = () => {
         const hours = now.getHours().toString().padStart(2, '0');
         const minutes = now.getMinutes().toString().padStart(2, '0');
         const currentTime = `${hours}:${minutes}`;
-
-        console.log(currentTime);
         return currentTime;
     }
 
@@ -57,19 +99,17 @@ const MessageGenerated = () => {
         var hours = now.getHours().toString().padStart(2, '0');
         var minutes = now.getMinutes().toString().padStart(2, '0');
         var currentTime = `${++hours}:${minutes}`;
-
-        console.log("L'arrivée est à ", currentTime);
         return currentTime
     }
 
     const data = {
-        transportType: "bus",
-        busNumber: "58",
+        transportType: getTransportType().toLowerCase(),
+        busNumber: getBus(),
         date: getCurrentDate(),
         departureTime: getCurrentTime(),
         arrivalTime: getArrival(),
         generatedID: generateRandomNumbers(),
-    }; 
+    };
 
     return (
         <View style={styles.ticketContainer}>

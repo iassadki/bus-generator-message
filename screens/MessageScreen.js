@@ -1,26 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView, ScrollView, Text, StyleSheet, Button } from 'react-native';
 import MessageGenerated from '../components/ui/MessageGenerated';
-import MessageSended from '../components/ui/MessageSended';
 
 export default function MessageScreen({ navigation }) {
 
     const [busInfo, setBusInfo] = useState(null);
-
-    useEffect(() => {
-        // Simulated JSON data for bus information
-        const fetchBusInfo = async () => {
-            const data = {
-                busNumber: "42",
-                destination: "Gare du Nord",
-                departureTime: "14:30",
-                arrivalTime: "15:30",
-            };
-            setBusInfo(data);
-        };
-
-        fetchBusInfo();
-    }, []);
 
     return (
         <SafeAreaView style={styles.container}>

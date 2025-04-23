@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useState } from 'react';
+import fields from '../data/fields.json'
 
 // const generateRandomNumber = (min, max) => {
 //     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -14,6 +15,7 @@ const MessageGenerated = () => {
     const [arrivalTime, setArrivalTime] = useState('');
     const [generatedID, setGeneratedID] = useState('');
     const now = new Date(); // Variable a manipuler pour les dates
+    const { bus } = fields;
 
     // Prendre un paramètre en entrée, sortir une variable en sortie
     // Mixer ensuite les deux variables 
@@ -115,19 +117,19 @@ const MessageGenerated = () => {
         <View style={styles.ticketContainer}>
             {/* Section titre et prix */}
             <View style={styles.headerSection}>
-                <Text style={styles.title}>RATP - Ticket SMS {data.transportType} {data.busNumber}</Text>
-                <Text style={styles.price}>2.50 euros TTC</Text>
+                <Text style={styles.title}>{bus.title} {data.transportType} {data.busNumber}</Text>
+                <Text style={styles.price}>{bus.price}</Text>
             </View>
 
             {/* Section informations de trajet */}
             <View style={styles.infoSection}>
-                <Text style={styles.infoText}>1 trajet sans corresp.</Text>
+                <Text style={styles.infoText}>{bus.routeType}</Text>
                 <Text style={styles.infoText}>Le {data.date} de {data.departureTime} à {data.arrivalTime}</Text>
             </View>
 
             {/* Section instruction */}
             <View style={styles.instructionSection}>
-                <Text style={styles.instructionText}>A PRESENTER AU CONDUCTEUR</Text>
+                <Text style={styles.instructionText}>{bus.todo}</Text>
             </View>
 
             {/* Section code */}
@@ -137,7 +139,7 @@ const MessageGenerated = () => {
 
             {/* Section URL */}
             <View style={styles.urlSection}>
-                <Text style={styles.urlText}>tab-sms.fr</Text>
+                <Text style={styles.urlText}>{bus.url}</Text>
             </View>
         </View>
     );

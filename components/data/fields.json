@@ -1,0 +1,9 @@
+{
+    "bus": {
+        "title": "RATP - Ticket SMS",
+        "price": "2.50 euros TTC",
+        "routeType": "1 trajet sans corresp.",
+        "todo": "A PRESENTER AU CONDUCTEUR",
+        "url": "tab-sms.fr"
+    }
+}

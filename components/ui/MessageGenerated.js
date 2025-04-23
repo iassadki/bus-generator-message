@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import * as Clipboard from 'expo-clipboard';
 import { useState } from 'react';
 import fields from '../data/fields.json'
 
@@ -21,8 +22,33 @@ const MessageGenerated = () => {
     // Mixer ensuite les deux variables 
     // Les attribuer aux fonctions ensuite, avec leur corps à la suite
 
+    const copyToClipboard = () => {
+        const textToCopy = `${bus.title} ${data.transportType} ${data.busNumber}
+${bus.price}
+
+${bus.routeType}
+Le ${data.date} de ${data.departureTime} à ${data.arrivalTime}
+
+${bus.todo}
+
+${data.generatedID}
+
+${bus.url}`;
+
+        Clipboard.setStringAsync(textToCopy);
+    }
+
+    const refreshTicket = () => {
+        setGeneratedID(generateRandomNumbers());
+    };
+
+    const changeBusNumber = (num) => {
+        // Cette fonction changera le bus sélectionné
+        setBusNumber(num);
+    };
+
     const getMessage = () => {
-        var messageSended = "BUS57"; // Chaine a récupérer
+        var messageSended = `BUS${busNumber || "57"}`; // Utilise le state busNumber s'il existe, sinon "57"
         return messageSended;
     }
 
@@ -114,38 +140,89 @@ const MessageGenerated = () => {
     };
 
     return (
-        <View style={styles.ticketContainer}>
-            {/* Section titre et prix */}
-            <View style={styles.headerSection}>
-                <Text style={styles.title}>{bus.title} {data.transportType} {data.busNumber}</Text>
-                <Text style={styles.price}>{bus.price}</Text>
+        <View>
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity onPress={copyToClipboard} style={styles.copyButton}>
+                    <Text style={styles.copyButtonText}>Copier le ticket</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={refreshTicket} style={styles.refreshButton}>
+                    <Text style={styles.copyButtonText}>Actualiser</Text>
+                </TouchableOpacity>
             </View>
 
-            {/* Section informations de trajet */}
-            <View style={styles.infoSection}>
-                <Text style={styles.infoText}>{bus.routeType}</Text>
-                <Text style={styles.infoText}>Le {data.date} de {data.departureTime} à {data.arrivalTime}</Text>
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity onPress={() => changeBusNumber("57")} style={styles.busButton}>
+                    <Text style={styles.copyButtonText}>Bus 57</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity onPress={() => changeBusNumber("323")} style={styles.busButton}>
+                    <Text style={styles.copyButtonText}>Bus 323</Text>
+                </TouchableOpacity>
             </View>
 
-            {/* Section instruction */}
-            <View style={styles.instructionSection}>
-                <Text style={styles.instructionText}>{bus.todo}</Text>
-            </View>
+            <View style={styles.ticketContainer}>
+                {/* Section titre et prix */}
+                <View style={styles.headerSection}>
+                    <Text style={styles.title}>{bus.title} {data.transportType} {data.busNumber}</Text>
+                    <Text style={styles.price}>{bus.price}</Text>
+                </View>
 
-            {/* Section code */}
-            <View style={styles.codeSection}>
-                <Text style={styles.codeText}>{data.generatedID}</Text>
-            </View>
+                {/* Section informations de trajet */}
+                <View style={styles.infoSection}>
+                    <Text style={styles.infoText}>{bus.routeType}</Text>
+                    <Text style={styles.infoText}>Le {data.date} de {data.departureTime} à {data.arrivalTime}</Text>
+                </View>
 
-            {/* Section URL */}
-            <View style={styles.urlSection}>
-                <Text style={styles.urlText}>{bus.url}</Text>
+                {/* Section instruction */}
+                <View style={styles.instructionSection}>
+                    <Text style={styles.instructionText}>{bus.todo}</Text>
+                </View>
+
+                {/* Section code */}
+                <View style={styles.codeSection}>
+                    <Text style={styles.codeText}>{data.generatedID}</Text>
+                </View>
+
+                {/* Section URL */}
+                <View style={styles.urlSection}>
+                    <Text style={styles.urlText}>{bus.url}</Text>
+                </View>
             </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
+    buttonContainer: {
+        marginTop: 10,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center', // Assure l'alignement vertical
+        gap: 10,
+        marginBottom: 10,
+    },
+    copyButton: {
+        backgroundColor: '#005026',
+        padding: 10,
+        borderRadius: 8,
+        // Supprimez alignSelf: 'center' et marginBottom: 10
+    },
+    refreshButton: {
+        backgroundColor: '#005026',
+        padding: 10,
+        borderRadius: 8,
+    },
+    busButton: {
+        backgroundColor: '#005026',
+        padding: 10,
+        borderRadius: 8,
+    },
+    copyButtonText: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center', // Assure que le texte est centré
+    },
     ticketContainer: {
         width: 280,
         backgroundColor: '#00843D',
